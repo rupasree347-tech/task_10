@@ -1,0 +1,23 @@
+{
+  "name": "task10-backend",
+  "version": "1.0.0",
+  "description": "Express.js backend for Advanced CRUD Application with Dashboard Analytics",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.2",
+    "express-validator": "^7.0.1",
+    "mongoose": "^9.7.1",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
