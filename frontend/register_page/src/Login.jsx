@@ -10,25 +10,28 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // In a real app: POST /auth/login and store token
-    navigate("/dashboard");
+    navigate("/dashboard/home");
   };
 
   return (
     <div className="auth-wrapper">
-      <div className="container">
+      <div className="auth-card">
+        <p className="brand">📋 RecordMS – Management System</p>
         <h1>Login</h1>
         <form onSubmit={handleSubmit}>
-          <label>Email</label>
-          <input type="email"    name="email"    placeholder="Enter your email"    value={form.email}    onChange={handleChange} required />
-          <label>Password</label>
-          <input type="password" name="password" placeholder="Enter your password" value={form.password} onChange={handleChange} required />
-          <button type="submit" className="btn-primary">Login</button>
+          <div className="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="email@example.com" value={form.email} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Your password" value={form.password} onChange={handleChange} required />
+          </div>
+          <button type="submit" className="btn btn-primary btn-block" style={{ marginTop: 6 }}>Login</button>
         </form>
         <p className="auth-link">Don't have an account? <Link to="/">Register</Link></p>
       </div>
     </div>
   );
 };
-
 export default Login;

@@ -12,35 +12,39 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-    if (form.password !== form.confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-    // In a real app: POST /users
+    if (form.password !== form.confirmPassword) { setError("Passwords do not match."); return; }
     alert("Account created! Please login.");
     navigate("/login");
   };
 
   return (
     <div className="auth-wrapper">
-      <div className="container">
+      <div className="auth-card">
+        <p className="brand">📋 RecordMS – Management System</p>
         <h1>Create Account</h1>
-        {error && <p style={{ color: "red", marginBottom: 12, textAlign: "center" }}>{error}</p>}
+        {error && <p className="form-error" style={{ marginBottom: 14, textAlign: "center" }}>{error}</p>}
         <form onSubmit={handleSubmit}>
-          <label>Full Name</label>
-          <input type="text"     name="name"            placeholder="Enter your name"     value={form.name}            onChange={handleChange} required />
-          <label>Email</label>
-          <input type="email"    name="email"           placeholder="Enter your email"    value={form.email}           onChange={handleChange} required />
-          <label>Password</label>
-          <input type="password" name="password"        placeholder="Create a password"   value={form.password}        onChange={handleChange} required />
-          <label>Confirm Password</label>
-          <input type="password" name="confirmPassword" placeholder="Confirm password"    value={form.confirmPassword} onChange={handleChange} required />
-          <button type="submit" className="btn-primary">Register</button>
+          <div className="form-group">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder="Your full name" value={form.name} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="email@example.com" value={form.email} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Create a password" value={form.password} onChange={handleChange} required />
+          </div>
+          <div className="form-group">
+            <label>Confirm Password</label>
+            <input type="password" name="confirmPassword" placeholder="Confirm password" value={form.confirmPassword} onChange={handleChange} required />
+          </div>
+          <button type="submit" className="btn btn-primary btn-block" style={{ marginTop: 6 }}>Register</button>
         </form>
         <p className="auth-link">Already have an account? <Link to="/login">Login</Link></p>
       </div>
     </div>
   );
 };
-
 export default Register;

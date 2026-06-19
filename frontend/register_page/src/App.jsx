@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Register    from "./Register";
-import Login       from "./Login";
-import DashboardPage from "./DashboardPage";
+import Register from "./Register";
+import Login    from "./Login";
+import AppShell from "./AppShell";
 import "./App.css";
 
 function App() {
@@ -10,7 +10,8 @@ function App() {
       <Routes>
         <Route path="/"          element={<Register />} />
         <Route path="/login"     element={<Login />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
+        {/* All dashboard pages live inside AppShell */}
+        <Route path="/dashboard/*" element={<AppShell />} />
         <Route path="*"          element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

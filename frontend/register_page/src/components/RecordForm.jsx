@@ -1,4 +1,4 @@
-// src/components/RecordForm.jsx
+// components/RecordForm.jsx  –  Q2 Add / Q4 Edit modal
 import { useState, useEffect } from "react";
 import "../App.css";
 
@@ -8,19 +8,11 @@ const RecordForm = ({ record, categories, onSave, onClose }) => {
   const [form,   setForm]   = useState(EMPTY);
   const [errors, setErrors] = useState({});
 
-  // Populate form when editing
   useEffect(() => {
-    if (record) {
-      setForm({
-        name:        record.name        || "",
-        email:       record.email       || "",
-        category_id: record.category_id || "",
-        status:      record.status      || "Active",
-        notes:       record.notes       || "",
-      });
-    } else {
-      setForm(EMPTY);
-    }
+    setForm(record
+      ? { name: record.name || "", email: record.email || "", category_id: record.category_id || "", status: record.status || "Active", notes: record.notes || "" }
+      : EMPTY
+    );
     setErrors({});
   }, [record]);
 
@@ -30,13 +22,11 @@ const RecordForm = ({ record, categories, onSave, onClose }) => {
   };
 
   const validate = () => {
-    const errs = {};
-    if (!form.name.trim())        errs.name        = "Name is required.";
-    if (!form.category_id)        errs.category_id = "Category is required.";
-    if (!form.status)             errs.status      = "Status is required.";
-    if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-                                  errs.email       = "Invalid email address.";
-    return errs;
+    const e = {};
+    if (!form.name.trim())  e.name        = "Name is required.";
+    if (!form.category_id)  e.category_id = "Category is required.";
+    if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Invalid email.";
+    return e;
   };
 
   const handleSubmit = (e) => {
@@ -50,45 +40,30 @@ const RecordForm = ({ record, categories, onSave, onClose }) => {
     <div className="modal-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="modal">
         <h2>{record ? " Edit Record" : "➕ Add New Record"}</h2>
-
         <form onSubmit={handleSubmit}>
-          <div className="record-form">
+          <div className="record-form-grid">
 
-            {/* Name */}
             <div className="form-group">
               <label>Name *</label>
-              <input
-                type="text" name="name"
-                placeholder="Full name"
-                value={form.name} onChange={handleChange}
-              />
-              {errors.name && <span style={{ color: "red", fontSize: ".8rem" }}>{errors.name}</span>}
+              <input type="text" name="name" placeholder="Full name" value={form.name} onChange={handleChange} />
+              {errors.name && <span className="form-error">{errors.name}</span>}
             </div>
 
-            {/* Email */}
             <div className="form-group">
               <label>Email</label>
-              <input
-                type="email" name="email"
-                placeholder="email@example.com"
-                value={form.email} onChange={handleChange}
-              />
-              {errors.email && <span style={{ color: "red", fontSize: ".8rem" }}>{errors.email}</span>}
+              <input type="email" name="email" placeholder="email@example.com" value={form.email} onChange={handleChange} />
+              {errors.email && <span className="form-error">{errors.email}</span>}
             </div>
 
-            {/* Category */}
             <div className="form-group">
               <label>Category *</label>
               <select name="category_id" value={form.category_id} onChange={handleChange}>
                 <option value="">Select category</option>
-                {categories.map((c) => (
-                  <option key={c.id} value={c.id}>{c.name}</option>
-                ))}
+                {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
-              {errors.category_id && <span style={{ color: "red", fontSize: ".8rem" }}>{errors.category_id}</span>}
+              {errors.category_id && <span className="form-error">{errors.category_id}</span>}
             </div>
 
-            {/* Status */}
             <div className="form-group">
               <label>Status *</label>
               <select name="status" value={form.status} onChange={handleChange}>
@@ -98,25 +73,17 @@ const RecordForm = ({ record, categories, onSave, onClose }) => {
               </select>
             </div>
 
-            {/* Notes */}
-            <div className="form-group full-row">
+            <div className="form-group full">
               <label>Notes</label>
-              <textarea
-                name="notes"
-                placeholder="Optional notes…"
-                value={form.notes} onChange={handleChange}
-              />
+              <textarea name="notes" placeholder="Optional notes…" value={form.notes} onChange={handleChange} />
             </div>
-
           </div>
 
-          <div className="form-actions">
+          <div className="modal-actions">
             <button type="submit" className="btn btn-success">
               {record ? "Update Record" : "Add Record"}
             </button>
-            <button type="button" className="btn btn-danger" onClick={onClose}>
-              Cancel
-            </button>
+            <button type="button" className="btn btn-outline" onClick={onClose}>Cancel</button>
           </div>
         </form>
       </div>

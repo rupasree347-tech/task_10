@@ -1,23 +1,22 @@
-// src/components/RecordTable.jsx
+// components/RecordTable.jsx  –  Q3 Read, Q4 Edit, Q5 Delete
 import "../App.css";
 
 const statusBadge = (status) => {
-  const map = {
-    Active:    "badge badge-active",
-    Completed: "badge badge-completed",
-    Pending:   "badge badge-pending",
-  };
-  return <span className={map[status] || "badge"}>{status}</span>;
+  const map = { Active: "badge-active", Completed: "badge-completed", Pending: "badge-pending" };
+  return <span className={`badge ${map[status] || ""}`}>{status}</span>;
 };
 
 const RecordTable = ({ records, loading, onEdit, onDelete }) => {
-  if (loading) return <div className="loading">Loading records…</div>;
-
-  if (!records.length)
-    return <div className="empty-state">No records found. Try adjusting your search or add a new record.</div>;
+  if (loading) return <div className="loading-state"> Loading records…</div>;
+  if (!records.length) return (
+    <div className="empty-state">
+      <span></span>
+      No records found. Try adjusting your filters or add a new record.
+    </div>
+  );
 
   return (
-    <div className="table-responsive">
+    <div className="table-wrap">
       <table>
         <thead>
           <tr>
@@ -33,14 +32,14 @@ const RecordTable = ({ records, loading, onEdit, onDelete }) => {
         <tbody>
           {records.map((rec) => (
             <tr key={rec.id}>
-              <td>{rec.id}</td>
-              <td>{rec.name}</td>
+              <td>#{rec.id}</td>
+              <td><strong>{rec.name}</strong></td>
               <td>{rec.email || "—"}</td>
               <td>{rec.category_name}</td>
               <td>{statusBadge(rec.status)}</td>
               <td>{new Date(rec.created_at).toLocaleDateString()}</td>
               <td>
-                <div className="actions">
+                <div className="actions-cell">
                   <button className="btn btn-success btn-sm" onClick={() => onEdit(rec)}>
                      Edit
                   </button>
